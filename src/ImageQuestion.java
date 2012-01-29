@@ -3,7 +3,7 @@
  * Amazon Mechanical Turk.
  */
 
-package img_selection;
+
 
 import java.util.ArrayList;
 

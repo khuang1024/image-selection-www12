@@ -1,4 +1,4 @@
-package img_selection;
+
 
 import com.amazonaws.mturk.service.axis.RequesterService;
 import com.amazonaws.mturk.util.PropertiesClientConfig;

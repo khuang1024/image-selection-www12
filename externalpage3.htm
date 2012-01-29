@@ -1,0 +1,197 @@
+<!-- This file needs to be hosted on an external server.  -->
+<html>
+
+
+<head>
+<style>
+h3 {font-family:verdana;font-size:14px;text-align:center;font-weight:bold}
+h4 {font-family:verdana;font-size:12px;font-weight:bold}
+p {font-family:verdana;font-size:12px}
+</style>
+</head>
+
+
+<script type="text/javascript">
+// This method Gets URL Parameters (GUP)
+	function gup(name){
+	var regexS = "[\\?&]"+name+"=([^&#]*)";
+	var regex = new RegExp( regexS );
+	var tmpURL = window.location.href;
+	var results = regex.exec( tmpURL );
+	if( results == null )
+		return "";
+	else
+		return results[1];
+	}
+// This method decodes the query parameters that were URL-encoded
+	function decode(strToDecode){
+		var encoded = strToDecode;
+		return unescape(encoded.replace(/\+/g,  " "));
+	}
+// This method check the amount of chosen images and if it is right then submit the form to Mechanical Turk
+	function checkAndSubmit(f, o){
+		var count = 0;
+		for(var i=0; i < document.mturk_form.chosenBox.length; i++){
+			if(document.mturk_form.chosenBox[i].checked){
+				count = count + 1;
+			}
+			if((i+1)%f==0){
+				if(count!=o){
+					alert("Please select exactly "+o+" images in section No."+((i+1)/f)+"  !");
+					return false;
+				}
+				else{
+					count=0;
+				}
+			}
+		}
+		//if(document.getElementById("feedback").value == ''){
+			//alert("Please input your feedback. Thank you.");
+			//document.getElementById("field").style.display ="none";
+			//return false;
+		//}
+		document.getElementById('mturk_form').submit();
+		return true;
+	}
+</script>
+
+
+<body style="font-family:verdana;font-size:12px">
+
+
+<script type="text/javascript">
+	//parse the parameters from the question XML string
+	var f = parseInt(gup('f'));
+	var g = parseInt(gup('g'));
+	var o = parseInt(gup('o'));
+	var urls = new Array();
+	for(var i = 0; i < f*g; i++){
+		urls.push(decode(gup('url'+i)));
+	}
+	//
+	if (gup('assignmentId') == "ASSIGNMENT_ID_NOT_AVAILABLE"){
+		document.write("			<h3 align=\"center\">Select the most clear images</h3>\n");
+		document.write("				<h4>Introduction</h4>\n");
+		document.write("					We will use the results of these HITs as part of our academic research on crowd-sourcing. We want to investigate how to use the crowd to do ranking efficiently. Please leave your feedback at the bottom of the HIT. Any feedback will be appreciated.\n");
+		document.write("				<h4>Guidelines</h4>\n");
+		document.write("					<ul>\n");
+		document.write("						<li>The criterion for choosing images is how much the images are blurred.  The <font color=\"red\">most clear (least blurred)</font> images should be chosen.</li>\n");
+		document.write("					</ul>\n");
+		document.write("				<h4>Example</h4>\n");
+		document.write("				Assume we have 3 images below and we need to choose 1 image which is <font color=\"red\">most clear (least blurred)</font>.  Then, the No.2 image (with red frame) should be selected.\n");
+		document.write("				<br />\n");
+		document.write("				<br />\n");
+		document.write("				<table align=\"center\" style=\"font-family:verdana;font-size:12px\">\n");
+		document.write("					<tr>\n");
+		document.write("						<td> <img src=\"http://users.soe.ucsc.edu/~khuang/testpic/testpic (71).JPG\" alt=\"1\" width=\"240\"></img></td>\n");
+		document.write("						<td> <img src=\"http://users.soe.ucsc.edu/~khuang/testpic/testpic (65xx).JPG\" alt=\"1\" width=\"240\"></img></td>\n");
+		document.write("						<td> <img src=\"http://users.soe.ucsc.edu/~khuang/testpic/testpic (64).JPG\" alt=\"1\" width=\"240\"></img></td>\n");
+		document.write("					</tr>\n");
+		document.write("					<tr>\n");
+		document.write("						<td width=\"33%\" align=\"center\">No.1 image</td>\n");
+		document.write("						<td width=\"33%\" align=\"center\">No.2 image</td>\n");
+		document.write("						<td width=\"33%\" align=\"center\">No.3 image</td>\n");
+		document.write("					</tr>\n");
+		document.write("				</table>\n");
+		document.write("				<h4><strong><font color=\"red\">* * Bonus Payment * *</font> </strong></h4>\n");
+		document.write("				<font color=\"red\">Each task is performed by many workers. For each task that you select the photograph that the majority of workers will select, we will give you a bonus payment of $0.03.</font>\n");
+		document.write("<h3>Introduction Ends</h3>\n");
+		document.write("				<hr />\n");
+	}
+	else{
+	    // instruction part
+	    document.write("			<h3 align=\"center\">Select the <font color=\"red\">most clear (least blurred)</font> images</h3>\n");
+		document.write("				<h4>Example</h4>\n");
+		document.write("				Assume we have 3 images below and we need to choose 1 image which is <font color=\"red\">most clear (least blurred)</font>.  Then, the No.2 image (with red frame) should be selected.\n");
+		document.write("				<br />\n");
+		document.write("				<br />\n");
+		document.write("				<table align=\"center\" style=\"font-family:verdana;font-size:12px\">\n");
+		document.write("					<tr>\n");
+		document.write("						<td> <img src=\"http://users.soe.ucsc.edu/~khuang/testpic/testpic (71).JPG\" alt=\"1\" width=\"240\"></img></td>\n");
+		document.write("						<td> <img src=\"http://users.soe.ucsc.edu/~khuang/testpic/testpic (65xx).JPG\" alt=\"1\" width=\"240\"></img></td>\n");
+		document.write("						<td> <img src=\"http://users.soe.ucsc.edu/~khuang/testpic/testpic (64).JPG\" alt=\"1\" width=\"240\"></img></td>\n");
+		document.write("					</tr>\n");
+		document.write("					<tr>\n");
+		document.write("						<td width=\"33%\" align=\"center\">No.1 image</td>\n");
+		document.write("						<td width=\"33%\" align=\"center\">No.2 image</td>\n");
+		document.write("						<td width=\"33%\" align=\"center\">No.3 image</td>\n");
+		document.write("					</tr>\n");
+		document.write("				</table>\n");
+		document.write("<h3>Introduction Ends</h3>\n");
+		document.write("				<hr />\n");
+		document.write("")
+	    // task part
+		document.write("<form id=\"mturk_form\" name=\"mturk_form\" method=\"POST\" action=\"http://www.mturk.com/mturk/externalSubmit\">");
+		document.write("<input type=\"hidden\" id=\"assignmentId\" name=\"assignmentId\" value=\"\">");
+		for(var i = 0; i < g; i++){
+			//document.write("				<br />\n");
+			document.write("<a id=\"section"+(i+1)+"\"><hr /></a>");
+			document.write("				<h4>Section No." + (i+1) + " :   Please choose <strong>" + o + "</strong> images which you think are <font color=\"red\">most clear (least blurred)</font> in this section.</h4>\n");
+			document.write("				<table align=\"center\" style=\"font-family:verdana;font-size:12px\">\n");
+			if(f%2 == 0){
+				//when f is an even number, we have an entire line
+				for(var j = 0; j < f; j+=2){
+					document.write("<tr>\n");
+					document.write("<td width=\"50%\" align=\"center\"> <img src=\"" + urls[i*f+j+0] + "\" alt=\"1\" width=\"360\"></img></td>\n");
+					document.write("<td width=\"50%\" align=\"center\"> <img src=\"" + urls[i*f+j+1] + "\" alt=\"1\" width=\"360\"></img></td>\n");
+					document.write("</tr>\n");
+					document.write("<tr>\n");
+					document.write("<td width=\"50%\" align=\"center\"><input type=\"checkbox\" name=\"chosenBox\" value=\"" + urls[i*f+j+0] + "\">&nbsp;No."+(j+1)+" image</td>\n");
+					document.write("<td width=\"50%\" align=\"center\"><input type=\"checkbox\" name=\"chosenBox\" value=\"" + urls[i*f+j+1] + "\">&nbsp;No."+(j+2)+" image</td>\n");
+					document.write("</tr>\n");
+				}
+			}
+			else{
+				//the last line will have only one image
+				for(var j = 0; j < f-1; j+=2){
+					document.write("<tr>\n");
+					document.write("<td width=\"50%\" align=\"center\"> <img src=\"" + urls[i*f+j+0] + "\" alt=\"1\" width=\"360\"></img></td>\n");
+					document.write("<td width=\"50%\" align=\"center\"> <img src=\"" + urls[i*f+j+1] + "\" alt=\"1\" width=\"360\"></img></td>\n");
+					document.write("</tr>\n");
+					document.write("<tr>\n");
+					document.write("<td width=\"50%\" align=\"center\"><input type=\"checkbox\" name=\"chosenBox\" value=\"" + urls[i*f+j+0] + "\">&nbsp;No."+(j+1)+" image</td>\n");
+					document.write("<td width=\"50%\" align=\"center\"><input type=\"checkbox\" name=\"chosenBox\" value=\"" + urls[i*f+j+1] + "\">&nbsp;No."+(j+2)+" image</td>\n");
+					document.write("</tr>\n");
+				}
+				document.write("<tr>\n");
+				document.write("<td width=\"50%\" align=\"center\"> <img src=\"" + urls[i*f+f-1] + "\" alt=\"1\" width=\"360\"></img></td>\n");
+				document.write("</tr>\n");
+				document.write("<tr>\n");
+				document.write("<td width=\"50%\" align=\"center\"><input type=\"checkbox\" name=\"chosenBox\" value=\"" + urls[i*f+j+0] + "\">&nbsp;No."+f+" image</td>\n");
+				document.write("</tr>\n");
+			}
+			document.write("				</table>\n");
+			document.write("				<br />\n");
+			if(i != g-1)
+				document.write("<center><button type=\"button\" onClick=\"location.href='#section"+(i+2)+"'\">next section</button></center>");
+			document.write("				<br />\n");
+			
+		}//for loop end
+		document.write("<hr />");
+		document.write("<h4>Feedback</h4>\n");
+		document.write("<textarea name=\"feedback\" rows=\"10\" cols=\"50\">\n");
+		document.write("</textarea>\n");
+		//document.write("<ul>\n");
+		document.write("<br />");
+		document.write("<br />");
+		document.write("<p>Since we want to investigate how to use the crowd to do ranking efficiently in our academic research on crowd-sourcing,</p>\n")
+		document.write("<p>please leave your feedback above.  Any kind of feedback will be appreciated.  Thank you!</p>\n");
+		//document.write("</ul>\n");
+		document.write("<hr />");
+		document.write("<h4>Please make sure that:</h4>\n");
+		document.write("<ul>\n");
+		document.write("<li>the criterion for choosing images is how much the images are blurred.  The <font color=\"red\">most clear (least blurred)</font>should be chosen.</li>\n");
+		document.write("</ul>\n");
+		document.write("<br />");
+		document.write("</form>");
+		document.write("<center><button type=\"button\" onClick=\"checkAndSubmit("+f+","+o+")\">Submit</button></center>");
+		document.getElementById('assignmentId').value = gup('assignmentId');//MUST include this line!!
+}
+
+</script>
+
+
+</body>
+
+
+</html>

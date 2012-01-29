@@ -1,4 +1,4 @@
-package img_selection;
+
 
 public class Item {
 	String url;
